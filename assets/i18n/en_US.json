@@ -1,0 +1,18 @@
+{
+    "appName": "PlaneD1090",
+    "splash.quote": "“There's only one job in this world that gives you an\n office in the sky; and that is pilot.”\n ― Mohith Agadi",
+    
+    "enterHost.welcome": "Welcome to ",
+    "enterHost.inputLabel":"Enter your dump1090 host",
+    "enterHost.hostInputHint": "Server host:port",
+    "enterHost.nextBtn": "Finish",
+
+    "confirmHost.titleText": "Great! Almost done",
+    "confirmHost.confirmingHost": "Confirming your host...",
+    "confirmHost.setupDone": "Setup is completed, enjoy!",
+
+    "error.hostIsUrlIsNotTrue": "Host does not appear to be a valid URL",
+    "error.hostUnreachable": "Host could not be reached",
+    "error.noDump1090": "Host is not a valid dump1090 host (Could'nt find json)",
+    "error.unexpectedJson": "Host is not a valid dump1090 host (Unexpected json format)"
+}

@@ -1,0 +1,33 @@
+name: d1090a
+description: An Android app to view your RPI/Server with an ADS-B receiver. With additional data from PlaneFinder. 
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  latlong: ^0.6.1
+  http: ^0.12.0+1
+  validators: ^1.0.0+1
+  flutter_svg: ^0.10.3
+  flutter_map: ^0.4.0
+  shared_preferences: ^0.5.1+1
+  flutter_spinkit: "^3.1.0"
+  flutter_localizations:
+    sdk: flutter
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/i18n/
+    - assets/icons/
+    - assets/icons/planes/
