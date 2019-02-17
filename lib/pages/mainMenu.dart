@@ -6,6 +6,7 @@ import 'package:latlong/latlong.dart';
 
 import 'package:d1090a/libs/planeFinder.dart';
 import 'package:d1090a/project/globals.dart' as globals;
+import 'package:d1090a/project/constants.dart';
 
 class MainMenu extends StatefulWidget 
 {
@@ -15,21 +16,12 @@ class MainMenu extends StatefulWidget
 
 class MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin 
 {
-	PlaneFinder pf;
-
 	@override
 	void initState()
 	{
 		super.initState();
 
  		Navigator.popUntil(context, ModalRoute.withName('/mainMenu'));
-
-		pf = new PlaneFinder(new Duration(seconds: 1), globals.hostUrl, onUpdated: ()
-		{
-			print(pf.user.localTime);
-		});
-
-		pf.start();
 	}
 
 	@override
@@ -42,19 +34,40 @@ class MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
 		]);
 
 		return Scaffold(
-			body: new FlutterMap(
-				options: new MapOptions(
-					center: new LatLng(51.5, -0.09),
-					zoom: 13.0,
-				),
-				layers: [
-					new TileLayerOptions(
-						urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+			body: Stack(
+				children: <Widget>
+				[
+					FlutterMap(
+						options: new MapOptions(
+							center: new LatLng(globals.planeFinder.user.location.latitude, globals.planeFinder.user.location.longitude),
+							zoom: 13.0,
+						),
+						layers: [
+							new TileLayerOptions(
+								urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+							),
+							new MarkerLayerOptions(
+							markers: [],
+							),
+						],
 					),
-					new MarkerLayerOptions(
-					markers: [],
+
+					Column(
+						mainAxisAlignment: MainAxisAlignment.start,
+						children: <Widget>[
+							Container(
+								height: (MediaQuery.of(context).size.height / 100) * 13.8,
+								decoration: BoxDecoration(
+									color: Const.dustyTeal
+								),
+								child: Row(children: <Widget>
+								[
+
+								])
+							),
+						]
 					),
-				],
+				]
 			)
 		);
 	}

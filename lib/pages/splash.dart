@@ -7,6 +7,7 @@ import 'package:d1090a/libs/localize.dart';
 import 'package:d1090a/project/constants.dart';
 
 import 'package:d1090a/project/globals.dart' as globals;
+import 'package:d1090a/libs/planeFinder.dart';
 
 class Splash extends StatefulWidget 
 {
@@ -33,9 +34,12 @@ class SplashState extends State<Splash> with SingleTickerProviderStateMixin
 				globals.hostUrl = host;
 				
 				/// Go to main menu
-				new Future.delayed(Duration(seconds: 2), () 
+				new Future.delayed(Duration(milliseconds: 500), () 
 				{
-					Navigator.pushReplacementNamed(context, '/mainMenu');
+					globals.planeFinder = new PlaneFinder(new Duration(seconds: 1), globals.hostUrl);
+					globals.planeFinder.init().then((b){
+						Navigator.pushReplacementNamed(context, '/mainMenu');
+					});
 				});
 			}
 			else

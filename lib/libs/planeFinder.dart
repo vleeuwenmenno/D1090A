@@ -28,6 +28,70 @@ class PlaneFinder
 
 	PlaneFinder(this.updateInterval, this.host, { this.onUpdated });
 
+	/// Prepares the class and waits for the first data to receive
+	Future<bool> init() async
+	{
+		await _fetchPost(host).then((http.Response s) 
+		{
+			if (s != null && s.statusCode == 200)
+			{
+				dynamic json;
+				try
+				{
+					json = jsonDecode(s.body);
+					
+					try 
+					{
+						json.forEach((dynamic k, dynamic v) 
+						{
+							if (k == "aircraft")
+							{
+								this.aircraft.clear();
+								v.forEach((dynamic key, dynamic value) 
+								{
+									this.aircraft.add(value);
+								});
+							}
+							else if (k == "user")
+							{
+								DateTime uTime;
+								LatLng uLoc = new LatLng(0, 0);
+
+								v.forEach((dynamic key, dynamic value) 
+								{
+									if (key == "user_lat")
+										uLoc.latitude = double.parse(value);
+
+									else if (key == "user_lon")
+										uLoc.longitude = double.parse(value);
+									
+									else if (key == "user_time")
+										uTime = DateTime.fromMillisecondsSinceEpoch((value * 1000).round());
+								});
+
+								this.user = new User(uTime, uLoc);
+							}
+						});
+
+						if (onUpdated != null)
+							onUpdated();
+					}
+					catch (e)
+					{
+						print(e);
+					}
+				}
+				catch (e)
+				{
+					print(e);
+				}
+			}
+		});
+
+		start();
+		return true;
+	}
+
 	/// Start updating the Aircraft list every [updateInterval]
 	void start() async
 	{
@@ -51,10 +115,10 @@ class PlaneFinder
 							{
 								if (k == "aircraft")
 								{
-									aircraft.clear();
+									this.aircraft.clear();
 									v.forEach((dynamic key, dynamic value) 
 									{
-										aircraft.add(value);
+										this.aircraft.add(value);
 									});
 								}
 								else if (k == "user")
@@ -74,7 +138,7 @@ class PlaneFinder
 											uTime = DateTime.fromMillisecondsSinceEpoch((value * 1000).round());
 									});
 
-									user = new User(uTime, uLoc);
+									this.user = new User(uTime, uLoc);
 								}
 							});
 
