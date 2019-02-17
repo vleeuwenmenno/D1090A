@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:d1090a/pages/mainMenu.dart';
+import 'package:d1090a/libs/planeFinder.dart';
 
 import 'package:d1090a/libs/localize.dart';
 
@@ -177,7 +177,11 @@ class ConfirmingHostState extends State<ConfirmingHost> with SingleTickerProvide
 										globals.hostUrl = host;
 
 										/// Let's go to the main menu
-										return Navigator.popAndPushNamed(context, '/mainMenu', result: Localize.of(context).trans("confirmHost.setupDone"));
+										globals.planeFinder = new PlaneFinder(new Duration(seconds: 1), globals.hostUrl);
+										globals.planeFinder.init().then((b)
+										{
+											return Navigator.popAndPushNamed(context, '/mainMenu', result: Localize.of(context).trans("confirmHost.setupDone"));
+										});
 									});
 								});
 							} 
