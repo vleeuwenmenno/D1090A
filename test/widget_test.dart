@@ -6,27 +6,59 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:d1090a/libs/localize.dart';
+
+import 'package:d1090a/project/globals.dart' as globals;
+import 'package:d1090a/project/constants.dart';
+
 import 'package:d1090a/pages/splash.dart';
+import 'package:d1090a/pages/mainMenu.dart';
+import 'package:d1090a/pages/firstLaunch/enterHost.dart';
+import 'package:d1090a/pages/firstLaunch/confirmHost.dart';
 
 void main() 
 {
 	testWidgets('Counter increments smoke test', (WidgetTester tester) async 
 	{
 		// Build our app and trigger a frame.
-		await tester.pumpWidget(Splash());
+		await tester.pumpWidget(MaterialApp(
+			supportedLocales:
+			[
+				const Locale('en', 'US')
+			],
+			localizationsDelegates: 
+			[  
+				const LocalizeDelegate(),  
+				GlobalMaterialLocalizations.delegate,  
+				GlobalWidgetsLocalizations.delegate  
+			],
+			localeResolutionCallback: (Locale locale, Iterable<Locale> supportedLocales) 
+			{
+				globals.deviceLocale = locale;
 
-		// Verify that our counter starts at 0.
-		expect(find.text('0'), findsOneWidget);
-		expect(find.text('1'), findsNothing);
-
-		// Tap the '+' icon and trigger a frame.
-		await tester.tap(find.byIcon(Icons.add));
-		await tester.pump();
-
-		// Verify that our counter has incremented.
-		expect(find.text('0'), findsNothing);
-		expect(find.text('1'), findsOneWidget);
+				for (Locale supportedLocale in supportedLocales) 
+				{
+					if (supportedLocale.languageCode == locale.languageCode || supportedLocale.countryCode == locale.countryCode) 
+					{  
+						return supportedLocale;  
+					}
+				}
+				
+				return supportedLocales.first;  
+			},
+			theme: ThemeData(primaryColor: Const.dustyTeal, accentColor: Const.sunflowerYellow),
+			debugShowCheckedModeBanner: false,
+			initialRoute: '/',
+			routes: {
+				'/': (context) => Splash(),
+				'/mainMenu': (context) => MainMenu(),
+				'/firstLaunch/enterHost': (context) => EnterHost(),
+				'/firstLaunch/confirmHost': (context) => ConfirmingHost(),
+			},
+		));
 	});
 }

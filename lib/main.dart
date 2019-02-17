@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'libs/localize.dart';
+import 'package:d1090a/libs/localize.dart';
 
-import 'project/globals.dart' as globals;
-import 'project/constants.dart';
+import 'package:d1090a/project/globals.dart' as globals;
+import 'package:d1090a/project/constants.dart';
 
 import 'package:d1090a/pages/splash.dart';
 import 'package:d1090a/pages/mainMenu.dart';
