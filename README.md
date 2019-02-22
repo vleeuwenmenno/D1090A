@@ -7,3 +7,7 @@ An Android app to view your RPI/Server with an ADS-B receiver. With additional d
 
 This project is licensed under the MIT License.
 See [LICENSE](LICENSE)
+
+# Contributors
+Luuk Kenselaar
+Menno van Leeuwen
