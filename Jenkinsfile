@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('Prepare environment') {
       steps {
+        sh "rm -rf flutter/"
         sh "git clone -b stable https://github.com/flutter/flutter.git"
         sh "flutter/bin/flutter doctor"
       }
