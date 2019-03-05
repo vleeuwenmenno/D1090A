@@ -14,12 +14,12 @@ pipeline {
     }
     stage('Get flutter packages') {
       steps {
-        sh 'flutter/bin/flutter packages get ../../'
+        sh 'flutter/bin/flutter packages get'
       }
     }
     stage('Test') {
       steps {
-        sh 'flutter/bin/flutter test --coverage ../../'
+        sh 'flutter/bin/flutter test --coverage'
       }
     }
   }
